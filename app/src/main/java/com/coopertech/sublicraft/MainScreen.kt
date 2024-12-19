@@ -7,68 +7,82 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.coopertech.sublicraft.navigation.MainScreens
+import com.coopertech.sublicraft.navigation.PostDetail
 import com.coopertech.sublicraft.presentation.FavoritesScreen
-import com.coopertech.sublicraft.presentation.PrintHome
+import com.coopertech.sublicraft.presentation.PrintHomeScreen
 import com.coopertech.sublicraft.presentation.explore.ExploreScreen
-
-data class NavItem(
-    val label: String,
-    val icon: Int
-)
+import com.coopertech.sublicraft.presentation.explore.PostDetailScreen
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
-    val navItemList = listOf(
-        NavItem("Print", R.drawable.round_print_24),
-        NavItem("Explorar", R.drawable.ic_explore),
-        NavItem("Favoritos", R.drawable.ic_favorites)
-    )
+    val navController = rememberNavController()
 
-    var selectedIndex by remember {
-        mutableIntStateOf(0)
-    }
-    Scaffold(modifier = modifier,
+    val screens = listOf(MainScreens.PrintHome, MainScreens.Explore, MainScreens.Favorites)
+
+    Scaffold(
+        modifier = modifier,
         bottomBar = {
             NavigationBar {
-                navItemList.forEachIndexed { index, navItem ->
+                screens.forEach { screen ->
+                    val isSelected = navController.currentBackStackEntryAsState().value?.destination?.route == screen.route
                     NavigationBarItem(
-                        selected = selectedIndex == index,
-                        onClick = { selectedIndex = index },
+                        selected = isSelected,
+                        onClick = {
+                            if (!isSelected) {
+                                navController.navigate(screen.route) {
+                                    // Pop up to the start destination of the graph to
+                                    // avoid building up a large stack of destinations
+                                    // on the back stack as users select items
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    // Avoid multiple copies of the same destination when
+                                    // reselecting the same item
+                                    launchSingleTop = true
+                                    // Restore state when reselecting a previously selected item
+                                    restoreState = true
+                                }
+                            }
+                        },
                         icon = {
                             Icon(
-                                painter = painterResource(id = navItem.icon),
-                                contentDescription = navItem.label
+                                painter = painterResource(id = screen.icon),
+                                contentDescription = screen.label
                             )
                         },
-                        label = {
-                            Text(text = navItem.label)
-                        }
+                        label = { Text(text = screen.label) }
                     )
                 }
             }
         }
     ) { innerPadding ->
-        ContentScreen(modifier = modifier.padding(innerPadding), selectedIndex)
-    }
+        NavHost(
+            navController = navController,
+            startDestination = MainScreens.PrintHome.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(MainScreens.PrintHome.route) { PrintHomeScreen() }
+            composable(MainScreens.Explore.route) { ExploreScreen{
+                navController.navigate(PostDetail)
+            } }
+            composable(MainScreens.Favorites.route) { FavoritesScreen() }
 
+           composable<PostDetail>{
+               PostDetailScreen(postId = "", onBack = {navController.popBackStack() })
+           }
+        }
+    }
 }
 
-@Composable
-fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
-    when(selectedIndex) {
-        0 -> PrintHome(modifier.padding(bottom = 0.dp))
-        1 -> ExploreScreen(modifier.padding(bottom = 0.dp))
-        2 -> FavoritesScreen(modifier.padding(bottom = 0.dp))
-    }
-}
 
 @Preview(showSystemUi = true)
 @Composable

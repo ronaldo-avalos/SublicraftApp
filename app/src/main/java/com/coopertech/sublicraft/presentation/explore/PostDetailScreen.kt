@@ -38,20 +38,31 @@ import com.coopertech.sublicraft.presentation.explore.model.PostItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PostDetailScreen(postItem: PostItem) {
+fun PostDetailScreen(postId: String, onBack: () -> Boolean) {
+    val postItem = PostItem(
+        id = "123",
+        images = listOf(
+            painterResource(id = R.drawable.plantillanavidad1),
+            painterResource(id = R.drawable.plantillanavidad2),
+            painterResource(id = R.drawable.plantillanavidad4),
+            painterResource(id = R.drawable.plantillanavidad6),
+            painterResource(id = R.drawable.plantillanavidad1),
+        ),
+        title = "Pack de plantillas para el día de muertos"
+    )
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {},
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción de navegación hacia atrás */ }) {
+                    IconButton(onClick = { onBack()}) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_arrow_back),
                             contentDescription = "Back",
                         )
                     }
                 },
-               colors = TopAppBarDefaults.topAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent,
                 )
             )
@@ -59,7 +70,8 @@ fun PostDetailScreen(postItem: PostItem) {
         containerColor = Color(0xFFF6F6F6)
     ) { paddingValues ->
         Column(
-            modifier = Modifier.padding(paddingValues)) {
+            modifier = Modifier.padding(paddingValues)
+        ) {
             // Encabezado con imágenes y texto
             Box(
                 modifier = Modifier
@@ -157,17 +169,6 @@ fun ListItemComponent() {
 
 @Preview(showSystemUi = true)
 @Composable
-fun PostScreenPreview(){
-    PostDetailScreen(
-        PostItem(
-            images = listOf(
-                painterResource(id = R.drawable.plantillanavidad1),
-                painterResource(id = R.drawable.plantillanavidad2),
-                painterResource(id = R.drawable.plantillanavidad4),
-                painterResource(id = R.drawable.plantillanavidad6),
-                painterResource(id = R.drawable.plantillanavidad1),
-            ),
-            title = "Pack de plantillas para el día de muertos"
-        ),
-    )
+fun PostScreenPreview() {
+
 }

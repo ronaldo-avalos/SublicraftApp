@@ -31,10 +31,12 @@ fun PostCardComponent(
     isFavorite: Boolean,
     postItem: PostItem,
     onFavoriteChanged: (PostItem, Boolean) -> Unit,
+    onPostTapped: (PostItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().clickable { onPostTapped(postItem)
+        },
         shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -94,6 +96,7 @@ fun PostCardComponent(
 @Composable
 fun PostCardPreview() {
     val item =  PostItem(
+        id = "213123",
         images = listOf(
             painterResource(id = R.drawable.plantillanavidad1),
             painterResource(id = R.drawable.plantillanavidad2),
@@ -109,6 +112,7 @@ fun PostCardPreview() {
         isFavorite =  false,
         onFavoriteChanged = { _, _ ->
 
-        }
+        },
+        onPostTapped = { }
     )
 }

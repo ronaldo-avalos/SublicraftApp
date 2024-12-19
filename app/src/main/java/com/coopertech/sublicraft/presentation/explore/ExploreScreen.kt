@@ -18,9 +18,10 @@ import com.coopertech.sublicraft.components.PostCardComponent
 import com.coopertech.sublicraft.presentation.explore.model.PostItem
 
 @Composable
-fun ExploreScreen(modifier: Modifier = Modifier) {
+fun ExploreScreen(modifier: Modifier = Modifier, navigateToDetail: (Any?) -> Unit) {
     val postsList = listOf(
         PostItem(
+            id = "213123",
             images = listOf(
                 painterResource(id = R.drawable.plantillanavidad1),
                 painterResource(id = R.drawable.plantillanavidad2),
@@ -32,6 +33,7 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
             title = "Pack de plantillas navideñas"
         ),
         PostItem(
+            id = "213123",
             images = listOf(
                 painterResource(id = R.drawable.plantillanavidad1),
                 painterResource(id = R.drawable.plantillanavidad2),
@@ -40,17 +42,7 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
             title = "Pack de plantillas para el día de muertos"
         ),
         PostItem(
-            images = listOf(
-                painterResource(id = R.drawable.plantillanavidad1),
-                painterResource(id = R.drawable.plantillanavidad2),
-                painterResource(id = R.drawable.plantillanavidad3),
-                painterResource(id = R.drawable.plantillanavidad4),
-                painterResource(id = R.drawable.plantillanavidad6),
-                painterResource(id = R.drawable.plantillanavidad1),
-            ),
-            title = "Pack de plantillas para el día de muertos"
-        ),
-        PostItem(
+            id = "213123",
             images = listOf(
                 painterResource(id = R.drawable.plantillanavidad1),
                 painterResource(id = R.drawable.plantillanavidad2),
@@ -62,6 +54,19 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
             title = "Pack de plantillas para el día de muertos"
         ),
         PostItem(
+            id = "213123",
+            images = listOf(
+                painterResource(id = R.drawable.plantillanavidad1),
+                painterResource(id = R.drawable.plantillanavidad2),
+                painterResource(id = R.drawable.plantillanavidad3),
+                painterResource(id = R.drawable.plantillanavidad4),
+                painterResource(id = R.drawable.plantillanavidad6),
+                painterResource(id = R.drawable.plantillanavidad1),
+            ),
+            title = "Pack de plantillas para el día de muertos"
+        ),
+        PostItem(
+            id = "213123",
             images = listOf(
                 painterResource(id = R.drawable.plantillanavidad1),
                 painterResource(id = R.drawable.plantillanavidad2),
@@ -72,6 +77,7 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
             ),
             title = "Pack de plantillas para el día de muertos"
         ),  PostItem(
+            id = "213123",
             images = listOf(
                 painterResource(id = R.drawable.plantillanavidad1),
                 painterResource(id = R.drawable.plantillanavidad2),
@@ -83,6 +89,7 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
             title = "Pack de plantillas para el día de muertos"
         ),
         PostItem(
+            id = "213123",
             images = listOf(
                 painterResource(id = R.drawable.plantillanavidad1),
                 painterResource(id = R.drawable.plantillanavidad2),
@@ -94,78 +101,17 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
             title = "Pack de plantillas para el día de muertos"
         ),
         PostItem(
+            id = "213123",
             images = listOf(
                 painterResource(id = R.drawable.plantillanavidad1),
                 painterResource(id = R.drawable.plantillanavidad2),
-                painterResource(id = R.drawable.plantillanavidad4),
-                painterResource(id = R.drawable.plantillanavidad6),
-                painterResource(id = R.drawable.plantillanavidad1),
-            ),
-            title = "Pack de plantillas para el día de muertos"
-        ),
-        PostItem(
-            images = listOf(
-                painterResource(id = R.drawable.plantillanavidad1),
-                painterResource(id = R.drawable.plantillanavidad2),
-                painterResource(id = R.drawable.plantillanavidad3),
-                painterResource(id = R.drawable.plantillanavidad4),
-                painterResource(id = R.drawable.plantillanavidad6),
-            ),
-            title = "Pack de plantillas para el día de muertos"
-        ),
-        PostItem(
-            images = listOf(
-                painterResource(id = R.drawable.plantillanavidad1),
-                painterResource(id = R.drawable.plantillanavidad2),
-                painterResource(id = R.drawable.plantillanavidad3),
-                painterResource(id = R.drawable.plantillanavidad4),
-                painterResource(id = R.drawable.plantillanavidad6),
-                painterResource(id = R.drawable.plantillanavidad1),
-            ),
-            title = "Pack de plantillas para el día de muertos"
-        ),  PostItem(
-            images = listOf(
-                painterResource(id = R.drawable.plantillanavidad1),
-                painterResource(id = R.drawable.plantillanavidad2),
-
-                painterResource(id = R.drawable.plantillanavidad6),
-                painterResource(id = R.drawable.plantillanavidad1),
-            ),
-            title = "Pack Navideño de plantillas para tazas"
-        ),  PostItem(
-            images = listOf(
-                painterResource(id = R.drawable.plantillanavidad1),
-
-            ),
-            title = "Pack de plantillas para el día de muertos"
-        ),  PostItem(
-            images = listOf(
-                painterResource(id = R.drawable.plantillanavidad1),
-                painterResource(id = R.drawable.plantillanavidad2),
-                painterResource(id = R.drawable.plantillanavidad3),
-                painterResource(id = R.drawable.plantillanavidad4),
-                painterResource(id = R.drawable.plantillanavidad6),
-                painterResource(id = R.drawable.plantillanavidad1),
-            ),
-            title = "Pack de plantillas para el día de muertos"
-        ),  PostItem(
-            images = listOf(
-                painterResource(id = R.drawable.plantillanavidad1),
-
-                painterResource(id = R.drawable.plantillanavidad1),
-            ),
-            title = "Pack de plantillas para el día de muertos"
-        ),  PostItem(
-            images = listOf(
-                painterResource(id = R.drawable.plantillanavidad1),
-                painterResource(id = R.drawable.plantillanavidad2),
-                painterResource(id = R.drawable.plantillanavidad3),
                 painterResource(id = R.drawable.plantillanavidad4),
                 painterResource(id = R.drawable.plantillanavidad6),
                 painterResource(id = R.drawable.plantillanavidad1),
             ),
             title = "Pack de plantillas para el día de muertos"
         )
+
 
     )
     val favoriteState = remember { mutableStateMapOf<PostItem, Boolean>() }
@@ -182,6 +128,9 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
                     isFavorite = favoriteState[post] ?: false,
                     onFavoriteChanged = { item, isFav ->
                         favoriteState[item] = isFav // Actualizar el estado
+                    },
+                    onPostTapped = {
+                        navigateToDetail(post)
                     }
                 )
             }
@@ -192,5 +141,5 @@ fun ExploreScreen(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true)
 @Composable
 fun ExploreScreenPreview() {
-    ExploreScreen()
+    ExploreScreen {}
 }
