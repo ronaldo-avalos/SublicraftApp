@@ -1,4 +1,4 @@
-package com.coopertech.sublicraft.presentation
+package com.coopertech.sublicraft.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.coopertech.sublicraft.R
-import com.coopertech.sublicraft.components.CardToolbox
-import com.coopertech.sublicraft.components.CardToolboxData
+import com.coopertech.sublicraft.ui.components.CardToolbox
+import com.coopertech.sublicraft.ui.components.CardToolboxData
 
 
 @Composable

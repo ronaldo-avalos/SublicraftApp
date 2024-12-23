@@ -1,10 +1,9 @@
-package com.coopertech.sublicraft.presentation.explore
+package com.coopertech.sublicraft.ui.explore
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,13 +14,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,12 +29,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coopertech.sublicraft.R
-import com.coopertech.sublicraft.components.ImagesGridComponent
-import com.coopertech.sublicraft.presentation.explore.model.PostItem
+import com.coopertech.sublicraft.ui.components.ImagesGridComponent
+import com.coopertech.sublicraft.ui.explore.model.PostItem
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PostDetailScreen(postId: String, onBack: () -> Boolean) {
+fun PostDetailScreen(postId: String, onBack: () -> Unit) {
     val postItem = PostItem(
         id = "123",
         images = listOf(
@@ -51,71 +46,72 @@ fun PostDetailScreen(postId: String, onBack: () -> Boolean) {
         title = "Pack de plantillas para el día de muertos"
     )
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {},
-                navigationIcon = {
-                    IconButton(onClick = { onBack()}) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_back),
-                            contentDescription = "Back",
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent,
-                )
-            )
-        },
+//        topBar = {
+//            TopAppBar(
+//                title = {
+//                        Text(text = "Plantilla detalle")
+//                },
+//                navigationIcon = {
+//                    IconButton(onClick = { onBack()}) {
+//                        Icon(
+//                            painter = painterResource(id = R.drawable.ic_arrow_back),
+//                            contentDescription = "Back",
+//                        )
+//                    }
+//                },
+//                colors = TopAppBarDefaults.topAppBarColors(
+//                    containerColor = Color.Transparent,
+//                )
+//            )
+//        },
         containerColor = Color(0xFFF6F6F6)
     ) { paddingValues ->
-        Column(
-            modifier = Modifier.padding(paddingValues)
+        LazyColumn(
+            modifier = Modifier.padding(paddingValues),
         ) {
             // Encabezado con imágenes y texto
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(250.dp)
-            ) {
-                ImagesGridComponent(
-                    images = postItem.images,
-                    modifier = Modifier.fillMaxSize()
-                )
+            item {
                 Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            Brush.verticalGradient(
-                                colors = listOf(Color.Transparent, Color.Black),
-                                startY = 100f
-                            )
-                        )
-                )
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .height(280.dp)
                 ) {
-                    Text(
-                        text = postItem.title,
-                        style = TextStyle(color = Color.White, fontSize = 20.sp)
+                    ImagesGridComponent(
+                        images = postItem.images,
+                        modifier = Modifier.fillMaxSize()
                     )
-                    Text(
-                        text = "@SubliPrintApp",
-                        style = TextStyle(color = Color.LightGray, fontSize = 14.sp)
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                Brush.verticalGradient(
+                                    colors = listOf(Color.Transparent, Color.Black),
+                                    startY = 100f
+                                )
+                            )
                     )
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            text = postItem.title,
+                            style = TextStyle(color = Color.White, fontSize = 20.sp)
+                        )
+                        Text(
+                            text = "@SubliPrintApp",
+                            style = TextStyle(color = Color.LightGray, fontSize = 14.sp)
+                        )
+                    }
                 }
             }
-
-            // Lista debajo del encabezado
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(10) { index -> // Lista simulada con 10 elementos
-                    ListItemComponent()
+            item {  // Lista debajo del encabezado
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                        ListItemComponent()
                 }
             }
         }
@@ -170,5 +166,5 @@ fun ListItemComponent() {
 @Preview(showSystemUi = true)
 @Composable
 fun PostScreenPreview() {
-
+  PostDetailScreen(postId = "1223") { }
 }

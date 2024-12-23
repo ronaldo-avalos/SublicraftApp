@@ -1,4 +1,4 @@
-package com.coopertech.sublicraft.presentation
+package com.coopertech.sublicraft.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

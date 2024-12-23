@@ -1,4 +1,4 @@
-package com.coopertech.sublicraft.components
+package com.coopertech.sublicraft.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coopertech.sublicraft.R
-import com.coopertech.sublicraft.presentation.explore.model.PostItem
+import com.coopertech.sublicraft.ui.explore.model.PostItem
 
 
 @Composable

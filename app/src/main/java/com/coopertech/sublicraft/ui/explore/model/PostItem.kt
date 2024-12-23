@@ -1,4 +1,4 @@
-package com.coopertech.sublicraft.presentation.explore.model
+package com.coopertech.sublicraft.ui.explore.model
 
 import androidx.compose.ui.graphics.painter.Painter
 

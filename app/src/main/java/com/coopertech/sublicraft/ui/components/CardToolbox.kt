@@ -1,4 +1,4 @@
-package com.coopertech.sublicraft.components
+package com.coopertech.sublicraft.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
