@@ -57,6 +57,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-storage")
+    implementation( libs.coil.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

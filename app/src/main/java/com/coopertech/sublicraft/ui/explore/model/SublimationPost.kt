@@ -1,12 +1,16 @@
 package com.coopertech.sublicraft.ui.explore.model
 
+import java.util.UUID
 
 
 data class SublimationPost(
-    val images: List<String>, // URLs de las imágenes subidas
+    val id: String = UUID.randomUUID().toString(), // Identificador único
+    val title: String,
+    val description: String,
     val tags: List<String>, // Lista de etiquetas
-    val category: String, // Categoría seleccionada
-    val description: String, // Descripción del post
-    val fileUrl: String? = null, // URL del archivo subido
-    val createdAt: Long = System.currentTimeMillis() // Timestamp del post
+    val category: String,
+    val images: List<String>, // Lista de URLs de las imágenes subidas
+    val fileLink: String?, // Enlace o archivo comprimido opcional
+    val createdAt: Long = System.currentTimeMillis(), // Timestamp para ordenar los posts
+    val userId: String // Relación con el usuario que crea el post
 )

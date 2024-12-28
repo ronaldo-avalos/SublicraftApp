@@ -3,8 +3,8 @@ package com.coopertech.sublicraft.ui.explore
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.coopertech.sublicraft.R
-import com.coopertech.sublicraft.ui.components.PostCardComponent
+import com.coopertech.sublicraft.ui.components.ProductItem
 import com.coopertech.sublicraft.ui.explore.model.PostItem
 
 @Composable
@@ -135,21 +135,20 @@ fun ExploreScreen(
                 }) 
         }
     ) { paddingValues ->
-        LazyColumn(
-            modifier = modifier.padding(paddingValues = paddingValues),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(16.dp)
+        LazyVerticalGrid(
+            modifier = Modifier.padding(paddingValues),
+            columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            this.items(postsList) { post ->
-                PostCardComponent(
-                    postItem = post,
-                    isFavorite = favoriteState[post] ?: false,
-                    onFavoriteChanged = { item, isFav ->
-                        favoriteState[item] = isFav // Actualizar el estado
-                    },
-                    onPostTapped = {
-                        navigateToDetail(post)
-                    }
+            items(10) { index ->
+                ProductItem(
+                    imageUrl = R.drawable.plantillanavidad4, // Imagen de prueba
+                    title = "Plantilla de envoltura $index",
+                    rating = 4.5,
+                    price = "$73.40 MXN",
+                    discountPrice = "$147.02 MXN"
                 )
             }
         }

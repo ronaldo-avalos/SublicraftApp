@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -29,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coopertech.sublicraft.R
-import com.coopertech.sublicraft.ui.components.ImagesGridComponent
+import com.coopertech.sublicraft.ui.components.ImageSlider
 import com.coopertech.sublicraft.ui.explore.model.PostItem
 
 @Composable
@@ -44,6 +43,13 @@ fun PostDetailScreen(postId: String, onBack: () -> Unit) {
             painterResource(id = R.drawable.plantillanavidad1),
         ),
         title = "Pack de plantillas para el día de muertos"
+    )
+    val  images = listOf<Int>(
+        R.drawable.plantillanavidad1,
+        R.drawable.plantillanavidad2,
+        R.drawable.plantillanavidad3,
+        R.drawable.plantillanavidad4,
+        R.drawable.plantillanavidad6
     )
     Scaffold(
 //        topBar = {
@@ -73,45 +79,37 @@ fun PostDetailScreen(postId: String, onBack: () -> Unit) {
             item {
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(280.dp)
+                        .fillMaxSize()
                 ) {
-                    ImagesGridComponent(
-                        images = postItem.images,
-                        modifier = Modifier.fillMaxSize()
+                    ImageSlider(images = images, modifier = Modifier.fillMaxSize())
+                }
+            }
+            item {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = postItem.title,
+                        style = TextStyle(fontSize = 20.sp)
                     )
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                Brush.verticalGradient(
-                                    colors = listOf(Color.Transparent, Color.Black),
-                                    startY = 100f
-                                )
-                            )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = "@SubliPrintApp",
+                        style = TextStyle(color = Color.Gray, fontSize = 14.sp)
                     )
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.BottomStart)
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = postItem.title,
-                            style = TextStyle(color = Color.White, fontSize = 20.sp)
-                        )
-                        Text(
-                            text = "@SubliPrintApp",
-                            style = TextStyle(color = Color.LightGray, fontSize = 14.sp)
-                        )
-                    }
                 }
             }
             item {  // Lista debajo del encabezado
                 Column(
-                    modifier = Modifier.fillMaxSize().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
+                    for (i in 0..10 ) {
                         ListItemComponent()
+                    }
                 }
             }
         }
@@ -130,7 +128,7 @@ fun ListItemComponent() {
     ) {
         Box(
             modifier = Modifier
-                .size(48.dp)
+                .size(52.dp)
                 .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
         )
         Spacer(modifier = Modifier.width(16.dp))
