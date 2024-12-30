@@ -1,182 +1,136 @@
 package com.coopertech.sublicraft.ui.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.coopertech.sublicraft.R
-import com.coopertech.sublicraft.ui.explore.model.PostItem
+import androidx.core.graphics.toColorInt
+import coil.compose.AsyncImage
+import com.coopertech.sublicraft.ui.theme.SublicraftTheme
 
 
 @Composable
-fun PostCardComponent(
-    isFavorite: Boolean,
-    postItem: PostItem,
-    onFavoriteChanged: (PostItem, Boolean) -> Unit,
-    onPostTapped: (PostItem) -> Unit,
-    modifier: Modifier = Modifier
+fun ProductCard2(
+    modifier: Modifier = Modifier,
+    image: String,
+    title: String,
+    rating: String,
+    price: String,
+    category: String,
+    addToCart: () -> Unit,
+    itemTapped: () -> Unit,
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth().clickable { onPostTapped(postItem)
-        },
-        shape = RoundedCornerShape(15.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
+    val ratingState by remember { mutableFloatStateOf(rating.toFloat()) }
+
+    Column(
+        modifier = modifier
+            .clickable { itemTapped() }
+            .padding(8.dp) // Opcional: Espaciado interno de cada tarjeta
+//            .fillMaxSize(), // Asegura que ocupe todo el espacio de la celda
+//        horizontalAlignment = Alignment.Start
     ) {
-        Box(
+        AsyncImage(
+            model = image,
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .aspectRatio(1 / 1f)
+                .clip(RoundedCornerShape(4.dp))
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            fontSize = 12.sp,
+            text = category,
+            color = MaterialTheme.colorScheme.outline
+        )
+        Text(
+            text = title,
+            maxLines = 2,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Medium,
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
         ) {
-//            ImagesGridComponent(
-//                images = postItem.images
-//            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                Color.Black
-                            ),
-                            startY = 300f,
-                        )
-                    )
-            ) {
-            }
             Text(
-                modifier = Modifier
-                    .padding(16.dp, bottom = 32.dp)
-                    .align(Alignment.BottomStart),
-                text = postItem.title, style = TextStyle(color = Color.White, fontSize = 18.sp)
+                fontSize = 12.sp,
+                text = "$rating/5",
+                color = MaterialTheme.colorScheme.outline
             )
-            Text(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .align(Alignment.BottomStart),
-                text = postItem.userName, style = TextStyle(color = Color.LightGray, fontSize = 9.sp)
-            )
-            Icon(
-                painter = painterResource(
-                    id = if (isFavorite) R.drawable.baseline_favorite else R.drawable.baseline_favorite_border
-                ),
-                contentDescription = if (isFavorite) "Favorito" else "No favorito",
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(16.dp)
-                    .clickable { onFavoriteChanged(postItem, !isFavorite) }, // Alternar favorito
-                tint = if (isFavorite) Color.Red else Color.White
+            Spacer(modifier = Modifier.width(4.dp))
+            RatingBar(
+                modifier = Modifier.offset(y = (-2).dp),
+                rating = ratingState,
             )
         }
     }
 }
 
 @Composable
-fun ProductItem(
-    imageUrl: Int,
-    title: String,
-    rating: Double,
-    price: String,
-    discountPrice: String
+fun RatingBar(
+    rating: Float,
+    modifier: Modifier = Modifier,
+    starCount: Int = 5,
+    filledStarColor: Color = Color("#FFB000".toColorInt()),
+    unfilledStarColor: Color = MaterialTheme.colorScheme.outline,
 ) {
-    Card(
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(4.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = imageUrl),
-                contentDescription = title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .height(120.dp)
-                    .fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = title,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                maxLines = 2
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "⭐ $rating", fontSize = 12.sp, color = Color.Gray)
-            Spacer(modifier = Modifier.height(4.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = price,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Text(
-                    text = discountPrice,
-                    fontSize = 12.sp,
-                    color = Color.Gray,
-                    style = MaterialTheme.typography.bodySmall
-                )
+    Row(modifier = modifier) {
+        for (i in 1..starCount) {
+            val starFraction = rating - i + 1
+            val iconTint = when {
+                starFraction >= 1 -> filledStarColor
+                else -> unfilledStarColor
             }
+            Icon(
+                imageVector = Icons.Default.Star,
+                contentDescription = null,
+                tint = iconTint,
+                modifier = Modifier
+                    .size(15.dp)
+            )
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun PostCardPreview() {
-    val item =  PostItem(
-        id = "213123",
-        images = listOf(
-            painterResource(id = R.drawable.plantillanavidad1),
-            painterResource(id = R.drawable.plantillanavidad2),
-            painterResource(id = R.drawable.plantillanavidad3),
-            painterResource(id = R.drawable.plantillanavidad4),
-            painterResource(id = R.drawable.plantillanavidad6),
-            painterResource(id = R.drawable.plantillanavidad1),
-        ),
-        title = "Pack de plantillas navideñas y esto es texto de prueba "
-    )
-    PostCardComponent(
-        postItem = item,
-        isFavorite =  false,
-        onFavoriteChanged = { _, _ ->
+private fun ProductCardPreview2() {
+    SublicraftTheme {
+        ProductCard2(
+            image = "https://cdn.rri.co.id/berita/1/images/1689391542821-images_(22)/1689391542821-images_(22).jpeg",
+            title = "Plantillas para el día de las madres",
+            rating = "3.5",
+            price = "23.22",
+            category = "Makanan",
+            addToCart = {},
+            itemTapped = {
 
-        },
-        onPostTapped = { }
-    )
+            }
+        )
+    }
 }
