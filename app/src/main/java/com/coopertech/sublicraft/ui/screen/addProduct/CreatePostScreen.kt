@@ -1,4 +1,4 @@
-package com.coopertech.sublicraft.ui.explore
+package com.coopertech.sublicraft.ui.screen.addProduct
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -37,12 +37,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.coopertech.sublicraft.ui.components.ImagesGridComponent
-import com.coopertech.sublicraft.ui.explore.model.SublimationPost
+import com.coopertech.sublicraft.model.ProductModel
 
 
 @Composable
 fun CreatePostScreen(
-    onPostSubmit: (SublimationPost) -> Unit
+    onPostSubmit: (ProductModel) -> Unit
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }

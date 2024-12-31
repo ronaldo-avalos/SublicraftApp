@@ -5,16 +5,16 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.coopertech.sublicraft.ui.PrintHomeScreen
-import com.coopertech.sublicraft.ui.explore.CreatePostScreen
-import com.coopertech.sublicraft.ui.explore.ExploreScreen
-import com.coopertech.sublicraft.ui.explore.PostDetailScreen
+import com.coopertech.sublicraft.ui.screen.printHome.PrintHomeScreen
+import com.coopertech.sublicraft.ui.screen.addProduct.CreatePostScreen
+import com.coopertech.sublicraft.ui.screen.explore.ExploreScreen
+import com.coopertech.sublicraft.ui.screen.detail.PostDetailScreen
 import com.coopertech.sublicraft.ui.navigation.Route.AddPost
 import com.coopertech.sublicraft.ui.navigation.Route.ExploreScreen
 import com.coopertech.sublicraft.ui.navigation.Route.FavoritesScreen
 import com.coopertech.sublicraft.ui.navigation.Route.PostDetail
 import com.coopertech.sublicraft.ui.navigation.Route.PrintHome
-import com.coopertech.sublicraft.ui.FavoritesScreen as FavoritesScreen1
+import com.coopertech.sublicraft.ui.screen.favorites.FavoritesScreen as FavoritesScreen1
 
 
 @Composable
@@ -53,7 +53,7 @@ fun NavegationWrapper(
         }
 
         composable<PostDetail> {
-            PostDetailScreen(postId = "") {
+            PostDetailScreen(postID = "") {
                 navController.popBackStack()
             }
         }

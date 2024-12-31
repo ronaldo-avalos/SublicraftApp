@@ -1,4 +1,4 @@
-package com.coopertech.sublicraft.ui
+package com.coopertech.sublicraft.ui.screen.favorites
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -1,12 +1,13 @@
-package com.coopertech.sublicraft.ui.explore.model
+package com.coopertech.sublicraft.model
 
 import java.util.UUID
 
 
-data class SublimationPost(
+data class ProductModel(
     val id: String = UUID.randomUUID().toString(), // Identificador único
     val title: String,
     val description: String,
+    val thumbnail: String,
     val tags: List<String>, // Lista de etiquetas
     val category: String,
     val images: List<String>, // Lista de URLs de las imágenes subidas

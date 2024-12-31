@@ -1,7 +1,6 @@
-package com.coopertech.sublicraft.ui.explore
+package com.coopertech.sublicraft.ui.screen.detail
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -29,48 +29,46 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coopertech.sublicraft.R
 import com.coopertech.sublicraft.ui.components.ImageSlider
-import com.coopertech.sublicraft.ui.explore.model.PostItem
+import com.coopertech.sublicraft.model.ProductModel
 
 @Composable
-fun PostDetailScreen(postId: String, onBack: () -> Unit) {
-    val postItem = PostItem(
-        id = "123",
+fun PostDetailScreen(postID: String, onBack: () -> Unit) {
+    //Get post for ID
+
+    val postItem = ProductModel(
+        title = "Superhéroes para Tazas",
+        description = "Explora plantillas de tus superhéroes favoritos como Superman, Batman y Avengers.",
+        thumbnail = "https://subliplantillas.com/wp-content/uploads/2020/05/plantillas-para-tazas-de-avengers-600x600.jpg",
+        tags = listOf("superman", "batman", "avengers", "tazas"),
+        category = "Cómics",
         images = listOf(
-            painterResource(id = R.drawable.plantillanavidad1),
-            painterResource(id = R.drawable.plantillanavidad2),
-            painterResource(id = R.drawable.plantillanavidad4),
-            painterResource(id = R.drawable.plantillanavidad6),
-            painterResource(id = R.drawable.plantillanavidad1),
+            "https://subliplantillas.com/wp-content/uploads/2020/05/plantillas-para-tazas-de-superman-600x600.jpg",
+            "https://subliplantillas.com/wp-content/uploads/2020/05/plantillas-para-tazas-de-batman-600x600.jpg",
+            "https://subliplantillas.com/wp-content/uploads/2020/05/plantillas-para-tazas-de-avengers-600x600.jpg"
         ),
-        title = "Pack de plantillas para el día de muertos"
+        fileLink = "https://example.com/files/tazas_superheroes.zip",
+        userId = "user_123"
     )
-    val  images = listOf<Int>(
-        R.drawable.plantillanavidad1,
-        R.drawable.plantillanavidad2,
-        R.drawable.plantillanavidad3,
-        R.drawable.plantillanavidad4,
-        R.drawable.plantillanavidad6
-    )
+
     Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = {
-//                        Text(text = "Plantilla detalle")
-//                },
-//                navigationIcon = {
-//                    IconButton(onClick = { onBack()}) {
-//                        Icon(
-//                            painter = painterResource(id = R.drawable.ic_arrow_back),
-//                            contentDescription = "Back",
-//                        )
-//                    }
-//                },
-//                colors = TopAppBarDefaults.topAppBarColors(
-//                    containerColor = Color.Transparent,
-//                )
-//            )
-//        },
-        containerColor = Color(0xFFF6F6F6)
+        bottomBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Button(
+                    onClick = {
+                        // Acción de descarga
+                        onDownload(postItem.fileLink)
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Descargar", style = TextStyle(fontSize = 16.sp))
+                }
+            }
+        }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier.padding(paddingValues),
@@ -81,7 +79,7 @@ fun PostDetailScreen(postId: String, onBack: () -> Unit) {
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    ImageSlider(images = images, modifier = Modifier.fillMaxSize())
+                    ImageSlider(images = postItem.images, modifier = Modifier.fillMaxSize())
                 }
             }
             item {
@@ -91,25 +89,15 @@ fun PostDetailScreen(postId: String, onBack: () -> Unit) {
                 ) {
                     Text(
                         text = postItem.title,
-                        style = TextStyle(fontSize = 20.sp)
+                        style = TextStyle(fontSize = 22.sp)
                     )
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "@SubliPrintApp",
+                        text = postItem.description,
                         style = TextStyle(color = Color.Gray, fontSize = 14.sp)
                     )
-                }
-            }
-            item {  // Lista debajo del encabezado
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    for (i in 0..10 ) {
-                        ListItemComponent()
-                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    //  ListItemComponent()
                 }
             }
         }
@@ -117,12 +105,23 @@ fun PostDetailScreen(postId: String, onBack: () -> Unit) {
 }
 
 
-@Composable
-fun ListItemComponent() {
+fun onDownload(fileLink: String?) {
+    fileLink?.let {
+        // Inicia la descarga del archivo
+        println("Iniciando descarga desde: $fileLink")
+        // Aquí puedes implementar la lógica para descargar el archivo,
+        // como usar DownloadManager o una librería como Retrofit.
+    } ?: run {
+        println("El enlace de descarga no está disponible")
+    }
+}
+
+
+    @Composable
+fun ListItemComponent(modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
             .height(64.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -164,5 +163,5 @@ fun ListItemComponent() {
 @Preview(showSystemUi = true)
 @Composable
 fun PostScreenPreview() {
-  PostDetailScreen(postId = "1223") { }
+    PostDetailScreen(postID = "1223") { }
 }

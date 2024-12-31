@@ -1,6 +1,5 @@
 package com.coopertech.sublicraft.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,15 +25,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.coopertech.sublicraft.R
+import coil.compose.AsyncImage
+
 @Composable
-fun ImageSlider(images: List<Int>, modifier: Modifier = Modifier) {
+fun ImageSlider(images: List<String>, modifier: Modifier = Modifier) {
     var currentPage by remember { mutableIntStateOf(0) }
-    val totalDots = 5// Número fijo de puntos
+    val totalDots =  if (images.size <= 5) images.size else 5 // Número fijo de puntos
     val imageCount = images.size
     val pagerState = rememberPagerState(
         pageCount = { Int.MAX_VALUE }
@@ -51,11 +50,13 @@ fun ImageSlider(images: List<Int>, modifier: Modifier = Modifier) {
                 .aspectRatio(1f)
         ) { page ->
             val actualIndex = page % imageCount // Calcula el índice válido de la imagen
-            Image(
-                painter = painterResource(id = images[actualIndex]),
+            AsyncImage(
+                model = images[actualIndex],
                 contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1 / 1f)
+                    .clip(RoundedCornerShape(4.dp))
             )
         }
 
@@ -91,12 +92,12 @@ fun ImageSlider(images: List<Int>, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun ImageSliderPreview() {
-    val  images = listOf<Int>(
-        R.drawable.plantillanavidad1,
-        R.drawable.plantillanavidad2,
-        R.drawable.plantillanavidad3,
-        R.drawable.plantillanavidad4,
-        R.drawable.plantillanavidad6,
+    val  images = listOf(
+       " R.drawable.plantillanavidad1",
+       " R.drawable.plantillanavidad1",
+       " R.drawable.plantillanavidad1",
+       " R.drawable.plantillanavidad1",
+       " R.drawable.plantillanavidad1",
     )
     ImageSlider(images = images, modifier = Modifier.fillMaxSize())
 }

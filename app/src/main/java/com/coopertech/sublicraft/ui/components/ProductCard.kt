@@ -35,7 +35,7 @@ import com.coopertech.sublicraft.ui.theme.SublicraftTheme
 
 
 @Composable
-fun ProductCard2(
+fun ProductCard(
     modifier: Modifier = Modifier,
     image: String,
     title: String,
@@ -121,7 +121,7 @@ fun RatingBar(
 @Composable
 private fun ProductCardPreview2() {
     SublicraftTheme {
-        ProductCard2(
+        ProductCard(
             image = "https://cdn.rri.co.id/berita/1/images/1689391542821-images_(22)/1689391542821-images_(22).jpeg",
             title = "Plantillas para el día de las madres",
             rating = "3.5",
