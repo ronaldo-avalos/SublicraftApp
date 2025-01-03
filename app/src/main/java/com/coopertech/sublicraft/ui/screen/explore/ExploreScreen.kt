@@ -59,7 +59,7 @@ fun ExploreScreen(
         }
     ) { paddingValues ->
         LazyVerticalGrid(
-            modifier = Modifier
+            modifier = modifier
                 .padding(paddingValues)
                 .fillMaxSize(),
             columns = GridCells.Fixed(2),
@@ -78,9 +78,6 @@ fun ExploreScreen(
                     itemTapped = {
                         navigateToDetail(imagesList[index])
                     }
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .aspectRatio(1f) // Hace que cada celda sea cuadrada
                 )
             }
         }

@@ -1,5 +1,6 @@
 package com.coopertech.sublicraft
 
+import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.coopertech.sublicraft.ui.navigation.NavegationWrapper
@@ -36,7 +36,7 @@ import com.coopertech.sublicraft.ui.navigation.TOP_LEVEL_DESTINATIONS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubliCraftApp(modifier: Modifier = Modifier) {
+fun SubliCraftApp(context: Context, modifier: Modifier = Modifier) {
     val navController = rememberNavController()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
@@ -76,7 +76,9 @@ fun SubliCraftApp(modifier: Modifier = Modifier) {
             }
         }
     ) {
-        NavegationWrapper(navController = navController,
+        NavegationWrapper(
+            context = context,
+            navController = navController,
             modifier.padding(it))
     }
 
@@ -122,8 +124,8 @@ fun SubliCraftTopAppBar(
     )
 }
 
-@Preview
-@Composable
-fun SubliAppPreview() {
-    SubliCraftApp()
-}
+//@Preview
+//@Composable
+//fun SubliAppPreview() {
+//    SubliCraftApp()
+//}

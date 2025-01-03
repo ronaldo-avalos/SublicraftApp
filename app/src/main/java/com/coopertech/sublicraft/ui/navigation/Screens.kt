@@ -9,6 +9,7 @@ sealed interface  Route {
     @Serializable data object FavoritesScreen : Route
     @Serializable data object PostDetail : Route
     @Serializable data object AddPost : Route
+    @Serializable data object LoginScreen : Route
 }
 
 data class SubliTopLevelDestination<T : Any>(val name: String, val route: T, val icon: Int)
