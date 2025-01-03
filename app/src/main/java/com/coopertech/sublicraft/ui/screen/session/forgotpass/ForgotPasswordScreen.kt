@@ -27,12 +27,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import com.coopertech.sublicraft.data.remote.firebase.auth.AuthManager
+import com.coopertech.sublicraft.ui.common.UiState
+import com.coopertech.sublicraft.ui.theme.Purple40
 import kotlinx.coroutines.launch
 
 @Composable
 fun ForgotPasswordScreen( auth: AuthManager) {
-    analytics.logScreenView(screenName = Routes.ForgotPassword.route)
+//    analytics.logScreenView(screenName = Routes.ForgotPassword.route)
 
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
@@ -61,14 +63,18 @@ fun ForgotPasswordScreen( auth: AuthManager) {
                 onClick = {
                     scope.launch {
                         when(val res = auth.resetPassword(email)) {
-                            is AuthRes.Success -> {
-                                analytics.logButtonClicked(buttonName = "Reset password $email")
-                                Toast.makeText(context, "Correo enviado", Toast.LENGTH_SHORT).show()
-                                navigation.navigate(Routes.Login.route)
+                            is UiState.Success -> {
+//                                analytics.logButtonClicked(buttonName = "Reset password $email")
+//                                Toast.makeText(context, "Correo enviado", Toast.LENGTH_SHORT).show()
+//                                navigation.navigate(Routes.Login.route)
                             }
-                            is AuthRes.Error -> {
-                                analytics.logError(error = "Reset password error $email : ${res.errorMessage}")
+                            is UiState.Error -> {
+//                                analytics.logError(error = "Reset password error $email : ${res.errorMessage}")
                                 Toast.makeText(context, "Error al enviar el correo", Toast.LENGTH_SHORT).show()
+                            }
+
+                            UiState.Loading -> {
+
                             }
                         }
                     }

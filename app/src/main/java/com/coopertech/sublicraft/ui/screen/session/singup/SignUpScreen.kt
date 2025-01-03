@@ -33,18 +33,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.google.firebase.analytics.FirebaseAnalytics
-import io.devexpert.android_firebase.ui.navigation.Routes
-import io.devexpert.android_firebase.ui.theme.Purple40
-import io.devexpert.android_firebase.utils.AnalyticsManager
-import io.devexpert.android_firebase.utils.AuthManager
-import io.devexpert.android_firebase.utils.AuthRes
+import com.coopertech.sublicraft.data.remote.firebase.auth.AuthManager
+import com.coopertech.sublicraft.ui.common.UiState
+import com.coopertech.sublicraft.ui.theme.Purple40
 import kotlinx.coroutines.launch
 
 @Composable
-fun SignUpScreen(analytics: AnalyticsManager, auth: AuthManager, navigation: NavController) {
-    analytics.logScreenView(screenName = Routes.SignUp.route)
+fun SignUpScreen(auth: AuthManager) {
+//    analyticscs.logScreenView(screenName = Routes.SignUp.route)
 
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
@@ -81,7 +77,7 @@ fun SignUpScreen(analytics: AnalyticsManager, auth: AuthManager, navigation: Nav
             Button(
                 onClick = {
                     scope.launch {
-                        signUp(email, password, auth, analytics, context, navigation)
+                        signUp(email, password, auth, context)
                     }
                 },
                 shape = RoundedCornerShape(50.dp),
@@ -97,7 +93,7 @@ fun SignUpScreen(analytics: AnalyticsManager, auth: AuthManager, navigation: Nav
         ClickableText(
             text = AnnotatedString("¿Ya tienes cuenta? Inicia sesión"),
             onClick = {
-                navigation.popBackStack()
+                //navigation.popBackStack()
             },
             style = TextStyle(
                 fontSize = 14.sp,
@@ -109,17 +105,21 @@ fun SignUpScreen(analytics: AnalyticsManager, auth: AuthManager, navigation: Nav
     }
 }
 
-private suspend fun signUp(email: String, password: String, auth: AuthManager, analytics: AnalyticsManager, context: Context, navigation: NavController) {
+private suspend fun signUp(email: String, password: String, auth: AuthManager, context: Context) {
     if(email.isNotEmpty() && password.isNotEmpty()) {
         when(val result = auth.createUserWithEmailAndPassword(email, password)) {
-            is AuthRes.Success -> {
-                analytics.logButtonClicked(FirebaseAnalytics.Event.SIGN_UP)
+            is UiState.Success -> {
+//                analytics.logButtonClicked(FirebaseAnalytics.Event.SIGN_UP)
                 Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
-                navigation.popBackStack()
+//                navigation.popBackStack()
             }
-            is AuthRes.Error -> {
-                analytics.logButtonClicked("Error SignUp: ${result.errorMessage}")
+            is UiState.Error -> {
+//                analytics.logButtonClicked("Error SignUp: ${result.errorMessage}")
                 Toast.makeText(context, "Error SignUp: ${result.errorMessage}", Toast.LENGTH_SHORT).show()
+            }
+
+            UiState.Loading ->  {
+
             }
         }
     } else {
